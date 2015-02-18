@@ -1,0 +1,8 @@
+#English
+
+#Key
+mcmp.inputEvent.volume=VolumeLeveling(mcmp)
+key.inputKey.add=Volume +
+key.inputKey.subtract=Volume -
+#Blocks
+tile.Player.name=Player

@@ -1,0 +1,8 @@
+#日本語
+
+#キー
+mcmp.inputEvent.volume=音量調整(mcmp)
+key.inputKey.add=音量 +
+key.inputKey.subtract=音量 -
+#ブロック
+tile.Player.name=プレイヤー
