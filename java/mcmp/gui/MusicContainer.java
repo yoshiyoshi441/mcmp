@@ -12,6 +12,7 @@ import net.minecraft.inventory.Container;
 public class MusicContainer extends Container {
 
     int xCoord, yCoord, zCorrd;
+
     public MusicContainer(int x, int y, int z) {
         this.xCoord = x;
         this.yCoord = y;

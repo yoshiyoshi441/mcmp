@@ -37,6 +37,8 @@ public class MusicGui extends GuiContainer
     private GuiButton buttonStop;
     private GuiButton buttonPause;
     private GuiButton buttonResume;
+    private GuiButton buttonTurnUpVolume;
+    private GuiButton buttonTurnDownVolume;
     private GuiButton buttonApply;
     private GuiButton buttonCancel;
 
@@ -79,6 +81,11 @@ public class MusicGui extends GuiContainer
         this.buttonResume = new GuiButton(5,
                 (int)(this.width * 0.74F), (int)(this.height * 0.75F) - 2, (int)(this.width * 0.1F), 20, "Resume");
 
+        this.buttonTurnUpVolume = new GuiButton(6,
+                (int)(this.width * 0.88F), (int)(this.height * 0.35F) - 2, (int)(this.width * 0.1F), 20, "Up");
+        this.buttonTurnDownVolume = new GuiButton(7,
+                (int)(this.width * 0.88F), (int)(this.height * 0.55F) - 2, (int)(this.width * 0.1F), 20, "Down");
+
         this.buttonApply = new GuiButton(0,
                 (int)(this.width * 0.08F), (int)(this.height * 0.9F) - 2, (int)(this.width * 0.4F), 20, "Apply");
         this.buttonCancel = new GuiButton(9,
@@ -90,6 +97,8 @@ public class MusicGui extends GuiContainer
         this.buttonList.add(this.buttonStop);
         this.buttonList.add(this.buttonPause);
         this.buttonList.add(this.buttonResume);
+        this.buttonList.add(this.buttonTurnUpVolume);
+        this.buttonList.add(this.buttonTurnDownVolume);
         this.buttonList.add(this.buttonApply);
         this.buttonList.add(this.buttonCancel);
 
@@ -133,6 +142,7 @@ public class MusicGui extends GuiContainer
         }else if (button == this.buttonStop)
         {
             this.clicked = button;
+            McmpCore.volume = 0.5;
             int status = basicPlayer.getStatus();
             if (status == BasicPlayer.PLAYING) {
                 try {
@@ -166,22 +176,53 @@ public class MusicGui extends GuiContainer
                 }
             }
         }
+        else if(button == this.buttonTurnUpVolume){
+            try {
+                int status = MusicGui.basicPlayer.getStatus();
+                if (status == BasicPlayer.PLAYING) {
+                    if (McmpCore.volume < 1.0) {
+                        McmpCore.volume = McmpCore.volume + 0.1;
+                        System.out.println(McmpCore.volume);
+                        MusicGui.basicPlayer.setGain(McmpCore.volume);
+                    } else if(McmpCore.volume > 1.0){
+                        McmpCore.volume = 1.0;
+                        System.out.println(McmpCore.volume);
+                        MusicGui.basicPlayer.setGain(McmpCore.volume);
+                    }
+                }
+            } catch (BasicPlayerException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(button == this.buttonTurnDownVolume){
+            try {
+                int status = MusicGui.basicPlayer.getStatus();
+                if (status == BasicPlayer.PLAYING) {
+                    if (McmpCore.volume > 0.0) {
+                        McmpCore.volume = McmpCore.volume - 0.1;
+                        System.out.println(McmpCore.volume);
+                        MusicGui.basicPlayer.setGain(McmpCore.volume);
+                    }
+                    else if(McmpCore.volume < 0.0){
+                        McmpCore.volume = 0.0;
+                        System.out.println(McmpCore.volume);
+                        MusicGui.basicPlayer.setGain(McmpCore.volume);
+                    }
+                }
+            } catch (BasicPlayerException e) {
+                e.printStackTrace();
+            }
+        }
         else if (button == buttonApply)
         {
-            if (MemoryChecker.checkMemorySizeWithGC(this.filePath))
-            {
-                this.mc.displayGuiScreen((GuiScreen)null);
-                this.mc.setIngameFocus();
-            }
-            else
-            {
-                this.buttonApply.displayString = "Out of Memory!";
-            }
+            this.mc.displayGuiScreen((GuiScreen)null);
+            this.mc.setIngameFocus();
         }
         else if (button == buttonCancel)
         {
             this.mc.displayGuiScreen((GuiScreen)null);
             this.mc.setIngameFocus();
+            McmpCore.volume = 0.5;
             int status = basicPlayer.getStatus();
             if(status == BasicPlayer.PLAYING) {
                 try {
@@ -339,7 +380,7 @@ public class MusicGui extends GuiContainer
     {
         public List<File> list = new ArrayList<File>();
 
-        public int currentIndex = -1;
+        public int currentIndex = 0;
 
         public GuiFileList(Minecraft mc, int width, int height, int top, int bottom, int slotHeight)
         {
