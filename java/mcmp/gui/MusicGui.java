@@ -14,6 +14,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +130,8 @@ public class MusicGui extends GuiContainer
             this.findFiles(new File(McmpCore.dirPath), "mp3");
             this.findFiles(new File(McmpCore.dirPath), "wav");
             this.findFiles(new File(McmpCore.dirPath), "ogg");
-        } else if (button == this.buttonPlay)
+        }
+        else if (button == this.buttonPlay)
         {
             this.clicked = button;
             this.filePath = this.textMusicFile.getText();
@@ -138,7 +141,6 @@ public class MusicGui extends GuiContainer
             } catch (BasicPlayerException e) {
                 e.printStackTrace();
             }
-
         }else if (button == this.buttonStop)
         {
             this.clicked = button;
@@ -413,6 +415,10 @@ public class MusicGui extends GuiContainer
                         continue;
                     }
                     if (f.isHidden()){
+                        continue;
+                    }
+                    String fp = f.getPath();
+                    if (!Files.isReadable(Paths.get(fp)) || Files.isSymbolicLink(Paths.get(fp))){
                         continue;
                     }
                     getSubDirs(f, "mp3", "wav", "ogg");
