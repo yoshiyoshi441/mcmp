@@ -13,11 +13,12 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by setuga on 2015/02/11.
@@ -137,6 +138,7 @@ public class MusicGui extends GuiContainer
             this.filePath = this.textMusicFile.getText();
             File musicFile = new File(filePath);
             try {
+                setFileHistory(musicFile);
                 open(musicFile);
             } catch (BasicPlayerException e) {
                 e.printStackTrace();
@@ -359,6 +361,42 @@ public class MusicGui extends GuiContainer
         }
     }
 
+    private void setFileHistory(File history){
+        try
+        {
+            File txtHistory = new File(McmpCore.dirPath + "MusicHistory.txt");
+            if (!txtHistory.exists())
+            {
+                txtHistory.createNewFile();
+            }
+            if (txtHistory.exists())
+            {
+                String[] week_name = {"日曜日", "月曜日", "火曜日", "水曜日",
+                        "木曜日", "金曜日", "土曜日"};
+
+                Calendar calendar = Calendar.getInstance();
+
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH) + 1;
+                int day = calendar.get(Calendar.DATE);
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minute = calendar.get(Calendar.MINUTE);
+                int second = calendar.get(Calendar.SECOND);
+                int week = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(txtHistory, true));
+                bufferedWriter.write("[" + year + "年" + month + "月" + day + "日" + week_name[week] +
+                        hour + "時" + minute + "分" + second + "秒" +  "]" + " "+ history.getName());
+                bufferedWriter.newLine();
+                bufferedWriter.close();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     private void getSubDirs(File current, String ... suffixes){
         if (current == null || !current.canRead()) {
             return;
@@ -425,7 +463,6 @@ public class MusicGui extends GuiContainer
                 }
             }
             MusicGui.this.textMusicFile.setText(path);
-
         }
 
         @Override
@@ -447,9 +484,9 @@ public class MusicGui extends GuiContainer
             if (label.isEmpty()){
                 label = file.getPath();
             }
-            if (label.length() > 25)
+            if (label.length() > 30)
             {
-                label = label.substring(0, 25);
+                label = label.substring(0, 30);
             }
             MusicGui.this.fontRendererObj.drawString(label,
                     (int)(this.width * 0.5F) - MusicGui.this.fontRendererObj.getStringWidth(label) / 2, var3 + 4,
