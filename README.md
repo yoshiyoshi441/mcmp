@@ -13,3 +13,9 @@ http://forum.minecraftuser.jp/viewtopic.php?f=13&t=20790
 ★BasicPlayer DeveloperGuide
 
 http://www.javazoom.net/jlgui/developerguide.html
+
+### ビルド方法
+
+BasicPlayer3.0をダウンロードして、libディレクトリの中にあるjarファイルを  
+このプロジェクト直下のlibディレクトリにコピーしてください
+http://www.javazoom.net/jlgui/api.html
