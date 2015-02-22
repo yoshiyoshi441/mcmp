@@ -26,6 +26,7 @@ public class ClientProxy extends CommonProxy{
         }
         return null;
     }
+
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == McmpCore.instance.musicGuiID)
@@ -34,22 +35,20 @@ public class ClientProxy extends CommonProxy{
         }
         return null;
     }
+
     @Override
     public void registerKeyEvent() {
         ClientRegistry.registerKeyBinding(addKey);
         ClientRegistry.registerKeyBinding(subtractKey);
     }
+
     @Override
     public void registerTileEntity() {
 
     }
+
     @Override
      public void registerEntity() {
 
     }
-    @Override
-    public void registerClientInfo(){
-
-    }
-
 }

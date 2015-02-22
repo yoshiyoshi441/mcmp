@@ -106,7 +106,6 @@ public class McmpCore
                         volume = volume + 0.1;
                         System.out.println(volume);
                         MusicGui.basicPlayer.setGain(volume);
-                        //String.valueOf(volume*100)+"%"
                     } else if(volume > 1.0){
                         volume = 1.0;
                         System.out.println(volume);
@@ -126,7 +125,6 @@ public class McmpCore
                         volume = volume - 0.1;
                         System.out.println(volume);
                         MusicGui.basicPlayer.setGain(volume);
-                        //String.valueOf(volume*100)+"%"
                     }
                     else if(volume < 0.0){
                         volume = 0.1;

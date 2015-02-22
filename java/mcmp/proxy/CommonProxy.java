@@ -13,19 +13,20 @@ public class CommonProxy implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return null;
     }
+
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         return null;
     }
+
     public void registerKeyEvent(){
 
     }
+
     public void registerTileEntity() {
 
     }
-    public void registerClientInfo(){
 
-    }
     public void registerEntity() {
 
     }

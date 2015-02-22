@@ -13,9 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -361,6 +359,25 @@ public class MusicGui extends GuiContainer
         }
     }
 
+    private void getSubDirs(File current, String ... suffixes){
+        if (current == null || !current.canRead()) {
+            return;
+        }
+        if (current.isDirectory()){
+            this.fileList.list.add(current);
+            return;
+        }
+        if (current.isFile()){
+            String path = current.toString();
+            for (String suffix : suffixes){
+                if (path.endsWith("." + suffix))
+                {
+                    this.fileList.list.add(current);
+                }
+            }
+        }
+    }
+
     private void setFileHistory(File history){
         try
         {
@@ -394,25 +411,6 @@ public class MusicGui extends GuiContainer
         catch (Exception e)
         {
             e.printStackTrace();
-        }
-    }
-
-    private void getSubDirs(File current, String ... suffixes){
-        if (current == null || !current.canRead()) {
-            return;
-        }
-        if (current.isDirectory()){
-            this.fileList.list.add(current);
-            return;
-        }
-        if (current.isFile()){
-            String path = current.toString();
-            for (String suffix : suffixes){
-                if (path.endsWith("." + suffix))
-                {
-                    this.fileList.list.add(current);
-                }
-            }
         }
     }
 
