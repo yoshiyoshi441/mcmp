@@ -16,6 +16,6 @@ http://www.javazoom.net/jlgui/developerguide.html
 
 ### ビルド方法
 
-BasicPlayer3.0をダウンロードして、libディレクトリの中にあるjarファイルを  
-このプロジェクト直下のlibディレクトリにコピーしてください
-http://www.javazoom.net/jlgui/api.html
+BasicPlayer3.0をダウンロードして、libsディレクトリの中にあるjarファイルを  
+このプロジェクト直下のlibsディレクトリにコピーしてください  
+- http://www.javazoom.net/jlgui/api.html
