@@ -1,48 +1,51 @@
 buildscript {
-	repositories {
-		mavenCentral()
-		maven {
-			name = "forge"
-			url = "http://files.minecraftforge.net/maven"
-		}
-		maven {
-			name = "sonatype"
-			url = "https://oss.sonatype.org/content/repositories/snapshots/"
-		}
-	}
-	dependencies {
-		classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
-	}
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+        flatDir {
+            dirs 'libs'
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT"
+    }
 }
 
 apply plugin: "forge"
 
 def defaultEncoding = 'UTF-8'
 compileJava {
-	options.encoding = defaultEncoding
+    options.encoding = defaultEncoding
 }
 
 sourceSets {
-	main {
-		java { srcDirs = ["src/main/java"] }
-		resources { srcDirs = ["src/main/resources"] }
-	}
+    main {
+        java { srcDirs = ["src/main/java"] }
+        resources { srcDirs = ["src/main/resources"] }
+    }
 }
 
 configurations {
-	external
-	compile.extendsFrom external
+    external
+    compile.extendsFrom external
 }
 
 dependencies {
-
+    compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 jar {
-	from fileTree(dir: "lib/", include: '*.jar').collect { it.isDirectory() ? it : zipTree(it) }
-	into('lib') {
-		from fileTree(dir: "lib/", exclude: '*.jar')
-	}
+    from fileTree(dir: "libs/", include: '*.jar').collect { it.isDirectory() ? it : zipTree(it) }
+    into('libs') {
+        from fileTree(dir: "libs/")
+    }
 }
 
 minecraft {
